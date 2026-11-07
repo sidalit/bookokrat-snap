@@ -1,0 +1,23 @@
+Strict snaps may only create shared memory named snap.<snap>.*; use that prefix
+for the Kitty graphics shared-memory pool.
+
+--- a/src/pdf/kittyv2/kgfx/pool.rs
++++ b/src/pdf/kittyv2/kgfx/pool.rs
+@@ -175,7 +175,7 @@
+     ///
+     /// The pool is lazily initialized on first write.
+     pub fn with_config(pool_size: usize, region_size: usize) -> Self {
+-        let prefix = format!("kgfxv2_pool_{}", std::process::id());
++        let prefix = format!("snap.bookokrat.kgfxv2_pool_{}", std::process::id());
+         Self::with_config_and_prefix(pool_size, region_size, prefix, DEFAULT_MIN_REUSE_AGE)
+     }
+ 
+@@ -187,7 +187,7 @@
+         region_size: usize,
+         min_reuse_age: Duration,
+     ) -> Self {
+-        let prefix = format!("kgfxv2_pool_{}", std::process::id());
++        let prefix = format!("snap.bookokrat.kgfxv2_pool_{}", std::process::id());
+         Self::with_config_and_prefix(pool_size, region_size, prefix, min_reuse_age)
+     }
+ 

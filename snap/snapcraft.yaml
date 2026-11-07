@@ -1,0 +1,72 @@
+name: bookokrat
+base: core26
+version: '0.3.14'
+title: Bookokrat
+icon: snap/gui/bookokrat.png
+summary: Read EPUB, PDF and DjVu books in your terminal
+description: |
+  Bookokrat is a terminal book reader for EPUB, PDF and DjVu files. It renders
+  text with images, keeps your place, bookmarks and notes, and shows PDF and
+  DjVu pages in terminals that support the Kitty or Sixel graphics protocols.
+
+  **Examples**
+
+     bookokrat
+     bookokrat ~/Books/novel.epub
+     bookokrat ~/Papers/paper.pdf
+
+  **File access**
+
+  Bookokrat can open books in your home directory. To also open books on USB
+  drives and other removable media (/media, /mnt), run:
+
+     sudo snap connect bookokrat:removable-media
+license: AGPL-3.0-or-later
+grade: stable
+confinement: strict
+website: https://github.com/bugzmanov/bookokrat
+source-code:
+  - https://github.com/bugzmanov/bookokrat
+  - https://github.com/sidalit/bookokrat-snap
+issues:
+  - https://github.com/bugzmanov/bookokrat/issues
+  - https://github.com/sidalit/bookokrat-snap/issues
+contact: https://github.com/sidalit/bookokrat-snap/issues
+
+platforms:
+  amd64:
+  arm64:
+
+apps:
+  bookokrat:
+    command: bin/bookokrat
+    plugs:
+      - home
+      - removable-media
+      # Copying text uses the Wayland or X11 clipboard.
+      - wayland
+      - x11
+
+parts:
+  bookokrat:
+    plugin: rust
+    source: https://github.com/bugzmanov/bookokrat.git
+    source-tag: v$SNAPCRAFT_PROJECT_VERSION
+    source-depth: 1
+    rust-channel: stable
+    build-packages:
+      - build-essential
+      # The default PDF/DjVu feature builds MuPDF with bindgen.
+      - clang
+      - libclang-dev
+      - libfontconfig-dev
+      - patch
+      - pkg-config
+    override-pull: |
+      craftctl default
+      patch -p1 < "$CRAFT_PROJECT_DIR/snap/local/snap-shm-names.patch"
+    override-build: |
+      craftctl default
+      install -Dm644 LICENSE -t "$CRAFT_PART_INSTALL/usr/share/doc/bookokrat"
+    stage-packages:
+      - libfontconfig1
