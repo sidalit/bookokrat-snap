@@ -56,12 +56,12 @@ parts:
     rust-channel: stable
     build-packages:
       - build-essential
-      # The default PDF/DjVu feature builds MuPDF with bindgen.
       - clang
       - libclang-dev
       - libfontconfig-dev
       - patch
       - pkg-config
+      - unzip
     override-pull: |
       craftctl default
       patch -p1 < "$CRAFT_PROJECT_DIR/snap/local/snap-shm-names.patch"
