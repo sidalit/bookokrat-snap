@@ -37,7 +37,7 @@ There are no `snap set` options. Change settings in the application with `Space+
 
 | Data | Location |
 | --- | --- |
-| Settings | `~/snap/bookokrat/current/.bookokrat_settings.yaml` |
+| Settings | `~/snap/bookokrat/current/.config/bookokrat` |
 | Bookmarks and comments | `~/snap/bookokrat/current/.local/share/bookokrat` |
 | Image cache and log | `~/snap/bookokrat/current/.cache` and `.local/state` |
 
